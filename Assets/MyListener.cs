@@ -3,6 +3,8 @@ using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
 using System.Threading;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 public class MyListener : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class MyListener : MonoBehaviour
     TcpListener server;
     TcpClient client;
     bool running;
+    List<Vector3> landmarkList;
 
 
     void Start()
@@ -18,7 +21,7 @@ public class MyListener : MonoBehaviour
         // Receive on a separate thread so Unity doesn't freeze waiting for data
         ThreadStart ts = new ThreadStart(GetData);
         thread = new Thread(ts);
-        thread.IsBackground=true;
+        thread.IsBackground = true;
         thread.Start();
     }
 
@@ -48,7 +51,39 @@ public class MyListener : MonoBehaviour
 
         // Decode the bytes into a string
         string dataReceived = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-        Debug.Log(connectionPort+":"+ dataReceived);
+
+
+        // Create a regular expression pattern that matches the individual arrays
+        string pattern = @"\[(.*?)\]";
+        Regex regex = new Regex(pattern);
+
+        MatchCollection matches = regex.Matches(dataReceived);
+        int numRows = matches.Count;
+        double[,] array2D = new double[numRows, 4];
+        for (int i = 0; i < numRows; i++)
+        {
+            string arrayString = matches[i].Groups[1].Value;
+            string[] floatStrings = arrayString.Split(',');
+            double number;
+            for (int j = 0; j < floatStrings.Length; j++)
+            {
+                if (double.TryParse(floatStrings[j], out number))
+                {
+                    array2D[i, j] = number;
+                }
+                else
+                {
+                    array2D[i, j] = 0.0;
+                }
+            }
+        }
+
+        for (int i = 0; i < numRows; i++)
+        {
+            landmarkList.Add(new Vector3(((float)array2D[i,1]),((float)array2D[i,2]),((float)array2D[i,3])));
+            Debug.Log(array2D[i, 0] + ", " + array2D[i, 1] + ", " + array2D[i, 2] + ", " + array2D[i, 3]);
+        }
+
         // Make sure we're not getting an empty string
         //dataReceived.Trim();
         // if (dataReceived != null && dataReceived != "")
