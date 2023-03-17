@@ -23,6 +23,8 @@ public class MyListener : MonoBehaviour
         thread = new Thread(ts);
         thread.IsBackground = true;
         thread.Start();
+
+        landmarkList=new List<Vector3>();
     }
 
     void GetData()
@@ -77,6 +79,7 @@ public class MyListener : MonoBehaviour
                 }
             }
         }
+        
 
         for (int i = 0; i < numRows; i++)
         {
