@@ -13,7 +13,9 @@ public class MyListener : MonoBehaviour
     TcpListener server;
     TcpClient client;
     bool running;
-    List<Vector3> landmarkList;
+    public List<Vector3> landmarkList;
+
+    public int landmarkSize;
 
 
     void Start()
@@ -61,6 +63,7 @@ public class MyListener : MonoBehaviour
 
         MatchCollection matches = regex.Matches(dataReceived);
         int numRows = matches.Count;
+        landmarkList.Clear();
         double[,] array2D = new double[numRows, 4];
         for (int i = 0; i < numRows; i++)
         {
@@ -84,9 +87,7 @@ public class MyListener : MonoBehaviour
         for (int i = 0; i < numRows; i++)
         {
             landmarkList.Add(new Vector3(((float)array2D[i,1]),((float)array2D[i,2]),((float)array2D[i,3])));
-            Debug.Log(array2D[i, 0] + ", " + array2D[i, 1] + ", " + array2D[i, 2] + ", " + array2D[i, 3]);
         }
-
         // Make sure we're not getting an empty string
         //dataReceived.Trim();
         // if (dataReceived != null && dataReceived != "")
@@ -95,6 +96,7 @@ public class MyListener : MonoBehaviour
         //     position = ParseData(dataReceived);
         //     nwStream.Write(buffer, 0, bytesRead);
         // }
+
     }
 
 
