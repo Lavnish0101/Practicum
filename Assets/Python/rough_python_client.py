@@ -29,10 +29,10 @@ try:
                   f_list=str(cd_list)
                   # Connect to the server and send the data
                   sock.sendall(f_list.encode("utf-8"))
-                  print (f_list)
+                #   print (f_list)
       
       if len(hnd_lst)!=0:
-                  f_list=str(cd_list)
+                  f_list=str(hnd_lst)
                   # Connect to the server and send the data
                   sck2.sendall(f_list.encode("utf-8"))
                   print (f_list)
