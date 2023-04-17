@@ -17,8 +17,8 @@ public class Landmarks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.name.Contains("hand")) fetchHandLandmarks();
-        if (gameObject.name.Contains("f(")) fetchFaceLandmarks();
+         fetchHandLandmarks();
+        //fetchFaceLandmarks();
 
     }
 
@@ -29,22 +29,11 @@ public class Landmarks : MonoBehaviour
             var pos = listener.landmarkList;
             if (pos.Capacity != 0 && num < pos.Capacity)
             {
-                transform.position = pos[(pos.Capacity <= 21 && (num > 21)) ? num - 21 : num] * -5;
+                transform.position = pos[num] * -5;
             }
         }
 
     }
 
-    void fetchFaceLandmarks()
-    {
-        if (listener != null)
-        {
-            var pos = listener.landmarkList;
-            if (pos.Capacity != 0 && num < pos.Capacity)
-            {
-                transform.position = pos[num];
-            }
-        }
-
-    }
+    
 }

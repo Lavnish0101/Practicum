@@ -32,12 +32,12 @@ class handetec():
     def find_pos(self,img,hand_no=0):
         cd_list=[]
         if self.processed_hands.multi_hand_landmarks:
-            handk=self.processed_hands.multi_hand_landmarks[hand_no]
-            for handk in self.processed_hands.multi_hand_landmarks:
-                  for id,lm in enumerate(handk.landmark):
-                      x,y,h=img.shape
-                    
-                      cd_list.append([id,lm.x,lm.y,lm.z])
+            if hand_no<len(self.processed_hands.multi_hand_landmarks):
+                handk=self.processed_hands.multi_hand_landmarks[hand_no]
+                for id,lm in enumerate(handk.landmark):
+                        x,y,h=img.shape
+                        
+                        cd_list.append([id,lm.x,lm.y,lm.z])
         return cd_list
 
         
