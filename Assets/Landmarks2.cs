@@ -29,7 +29,7 @@ public class Landmarks2 : MonoBehaviour
             var pos = listener.landmarkList;
             if (pos.Capacity != 0 && num < pos.Capacity)
             {
-                transform.position = pos[num] * -4.25;
+                transform.position = pos[num] * (-4);
             }
         }
 
