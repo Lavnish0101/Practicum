@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Landmarks : MonoBehaviour
+//listener 2.0
+public class Landmarks3 : MonoBehaviour
 {
-    public MyListener listener;
+    public Listener2 listener;
 
     int num;
 
@@ -29,7 +29,7 @@ public class Landmarks : MonoBehaviour
             var pos = listener.landmarkList;
             if (pos.Capacity != 0 && num < pos.Capacity)
             {
-                transform.position = new Vector3(pos[num].x*-4,pos[num].y*-5,pos[num].z*-5);
+                transform.position = new Vector3(pos[num].x*-5,pos[num].y*-5,pos[num].z*-5-4);
             }
         }
 
